@@ -14,10 +14,14 @@ import com.ibm.watson.developer_cloud.speech_to_text.v1.model.SpeechRecognitionR
 public class speechtoText_main {
 		public static void main(String[] args) {
 			SpeechToText service = new SpeechToText();
-			service.setUsernameAndPassword("e1c2bfb1-d8ac-4a0f-b717-568705cd4aca", "pGfQPiANftj1");
+			service.setUsernameAndPassword("J16015", "J16015");
 
 			File audio = new File("audio/output.wav");
 			RecognizeOptions options = null;
+
+
+
+
 			try {
 				options = new RecognizeOptions.Builder()
 						.model("ja-JP_BroadbandModel")
@@ -47,6 +51,12 @@ public class speechtoText_main {
 					.get("transcript").toString());
 
 			System.out.println("confidence:" + node.get("results").get(0).get("alternatives").get(0)
+					.get("confidence").asDouble());
+
+			MySQL mysql = new MySQL();
+
+			mysql.updateImage(node.get("results").get(0).get("alternatives").get(0)
+					.get("transcript").toString(), node.get("results").get(0).get("alternatives").get(0)
 					.get("confidence").asDouble());
 
 		}
